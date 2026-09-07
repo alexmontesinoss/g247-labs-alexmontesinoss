@@ -1,0 +1,10 @@
+# Ficheros basura del sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Dependencias (a partir del bloque II)
+node_modules/
+
+# Variables de entorno con credenciales (bloque II)
+.env

@@ -1,0 +1,5 @@
+Deja aqui tu foto con el nombre exacto:  alejandro-deporte.jpg
+
+Es la imagen que referencia el index.html. Cuando la pongas, ajusta los
+atributos width y height del <img> a los pixeles reales de tu foto
+(clic derecho sobre el archivo -> Propiedades -> Detalles).
