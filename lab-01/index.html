@@ -9,7 +9,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi trayectoria deportiva | Alejandro Montesinos</title>
 </head>
 
@@ -17,14 +17,16 @@
 
   <header id="inicio">
     <h1>Mi trayectoria deportiva</h1>
-    <p>Alejandro Montesinos &middot; estudiante de CUNEF Universidad</p>
+    <p>Alejandro Montesinos &middot; estudiante de CUNEF</p>
   </header>
 
-  <nav>
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#deportes">Deportes</a>
-    <a href="#destacado">Mi mejor competición</a>
-    <a href="#contacto">Contacto</a>
+  <nav aria-label="Navegación principal">
+    <ul>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#deportes">Deportes</a></li>
+      <li><a href="#destacado">Mi mejor recuerdo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
   </nav>
 
   <main>
@@ -32,77 +34,95 @@
     <section id="sobre-mi">
       <h2>Sobre mí</h2>
 
-      <!-- TODO: sustituir por una foto real y ajustar width y height a sus píxeles reales -->
-      <img src="img/alejandro-deporte.jpg"
-           alt="Alejandro Montesinos entrenando en la piscina cubierta de su club"
-           width="640" height="426">
+      <img src="img/trayectoria.svg"
+           alt="Línea de tiempo con mis cuatro deportes en orden: fútbol, tenis, baloncesto y pádel"
+           width="640" height="220">
 
       <p>
-        Me llamo Alejandro y llevo practicando deporte desde pequeño. En esta página
-        recojo los deportes a los que he dedicado más horas, qué aprendí en cada uno
-        y la competición que recuerdo con más cariño. Ahora estudio en
-        <a href="https://www.cunef.edu/" title="Sitio web oficial de CUNEF Universidad">CUNEF Universidad</a>
-        y sigo entrenando varios días por semana.
+        Me llamo Alejandro, tengo 18 años y estudio en
+        <a href="https://www.cunef.edu/" title="Web oficial de CUNEF Universidad">CUNEF</a>.
+        Llevo haciendo deporte desde
+        pequeño y he pasado por cuatro: fútbol, tenis, baloncesto y pádel. En esta página
+        cuento un poco de cada uno y el partido que mejor recuerdo.
       </p>
 
       <p>
-        Si tuviera que resumir estos años en una sola idea, sería esta:
-        <strong>la constancia rinde más que el talento</strong>. Los mejores compañeros
-        que he tenido no eran los más rápidos, eran los que no faltaban a los entrenamientos.
+        Si me preguntas qué he sacado de todos estos años, te diría que lo que más cuenta es
+        no faltar a los entrenamientos. Los mejores compañeros que he tenido no eran los que
+        mejor jugaban, eran los que siempre estaban.
       </p>
     </section>
 
     <section id="deportes">
       <h2>Deportes que he practicado</h2>
 
-      <p>Estos son los tres deportes a los que más tiempo he dedicado, en orden cronológico:</p>
+      <p>Estos son los cuatro, por orden:</p>
 
-      <!-- TODO: cambiar deportes y fechas por los tuyos de verdad -->
       <ol>
         <li>Fútbol</li>
-        <li>Natación</li>
+        <li>Tenis</li>
+        <li>Baloncesto</li>
         <li>Pádel</li>
       </ol>
 
       <h3>Fútbol</h3>
       <p>
-        Fue mi primer deporte y el que más años practiqué. Jugaba en el equipo del
-        colegio y luego en un club del barrio. De ahí me llevé lo que no se entrena
-        en solitario: leer lo que va a hacer un compañero antes de que lo haga.
+        Fue mi primer deporte y el que más me duró. Me apuntaron con seis años en el
+        Paracuellos F.C., que es el club de mi pueblo, y estuve unas siete temporadas, hasta
+        segundo de la ESO. Jugaba arriba, de delantero o de extremo. Me gustaba más el
+        extremo, porque puedes encarar y correr en vez de estar esperando el balón.
       </p>
 
-      <h3>Natación</h3>
+      <h3>Tenis</h3>
       <p>
-        Después del fútbol me pasé a la piscina, y el cambio fue más grande de lo que
-        esperaba: se entrena en silencio y compites sobre todo contra el cronómetro.
-        Mi <span lang="en">personal best</span> en los 100 metros libres sigue siendo
-        la marca de la que estoy más orgulloso.
+        Cuando dejé el fútbol me metí a tenis, en el club que tengo al lado de casa. El
+        cambio fue raro: en el tenis estás tú <em>solo</em>, no hay nadie a quien pasarle la bola
+        cuando te va mal. Empecé a competir, pero lo dejé porque me iba un año a Estados
+        Unidos.
+      </p>
+
+      <h3>Baloncesto</h3>
+      <p>
+        A este llegué de casualidad. Hace dos años me fui de intercambio a Estados Unidos, a
+        un colegio de
+        <a href="https://es.wikipedia.org/wiki/Maple_Lake_(Minnesota)"
+           title="Maple Lake, el pueblo de Minnesota donde estuve de intercambio"
+           target="_blank">Maple Lake</a>, un pueblo pequeño de Minnesota. Allí los deportes
+        van por temporadas de tres o cuatro meses en vez de durar todo el año, y la de
+        baloncesto es en invierno. Me apunté al equipo del colegio sin haber jugado nunca.
+      </p>
+
+      <p>
+        Entrenábamos todos los días después de clase. Los partidos no se parecían en nada a
+        lo de aquí: se juega en el polideportivo del colegio, con la banda de música tocando
+        en las gradas y un montón de gente del pueblo viéndolo. Yo estaba en el
+        <span lang="en">junior varsity</span>, que viene a ser el equipo B.
       </p>
 
       <h3>Pádel</h3>
       <p>
-        Es el deporte que practico ahora. Juego en pareja los fines de semana y, aunque
-        no compito en federados, es el que más me ha enseñado sobre colocación y
-        paciencia: el punto casi nunca lo gana el golpe más fuerte.
+        Es lo que juego ahora, desde que volví de Estados Unidos. Después del tenis se
+        agradece volver a tener a alguien al lado. La pista es más pequeña y se puede jugar
+        con la pared, así que al principio le pegas fuerte a todo y no te sirve de nada.
       </p>
     </section>
 
     <section id="destacado">
-      <h2>Mi mejor competición</h2>
+      <h2>Mi mejor recuerdo</h2>
 
       <article>
-        <h3>La travesía de 1500 metros que no pensaba terminar</h3>
+        <h3>Mi primer partido en Minnesota</h3>
         <p>
-          Me apunté a la travesía casi por acompañar a un amigo. Hasta ese día
-          <em>nunca</em> había nadado 1500 metros seguidos en aguas abiertas, y los
-          primeros doscientos fueron un desastre: salí demasiado rápido, tragué agua
-          y perdí de vista las boyas.
+          Llevaba tres semanas en el colegio cuando jugué mi primer partido. Me sabía los
+          nombres de la mitad del equipo y las jugadas me las habían explicado en inglés y a
+          gritos, así que salí a la pista sin tener muy claro lo que tenía que hacer.
         </p>
         <p>
-          A partir de la mitad dejé de mirar a los demás y me centré en contar
-          brazadas de veinte en veinte. Entré en meta lejos de los primeros puestos,
-          pero terminé. Es la única competición en la que el resultado me da
-          exactamente igual.
+          Lo que más me sorprendió fue el ambiente. Aquí había jugado siete temporadas de
+          fútbol y no venía a vernos nadie más que los padres. Allí el polideportivo estaba
+          lleno un martes por la tarde. No metí ni un punto y me equivoqué en casi
+          todos los bloqueos, pero es el partido que mejor recuerdo de todos los que he
+          jugado.
         </p>
       </article>
     </section>
@@ -110,10 +130,10 @@
     <aside>
       <h2>Ficha rápida</h2>
       <ul>
-        <li>Deportes practicados: tres</li>
-        <li>Deporte actual: pádel</li>
-        <li>Entrenamientos por semana: tres</li>
-        <li>Competición favorita: travesía de aguas abiertas</li>
+        <li>Deportes: fútbol, tenis, baloncesto y pádel</li>
+        <li>El primero: fútbol, con seis años, en el Paracuellos F.C.</li>
+        <li>El de ahora: pádel</li>
+        <li>El más raro: baloncesto, en Minnesota</li>
       </ul>
     </aside>
 
@@ -122,11 +142,10 @@
   <footer id="contacto">
     <h2>Contacto</h2>
     <p>
-      Puedes localizarme a través de la
-      <a href="https://www.cunef.edu/">web de CUNEF Universidad</a>.
+      Esta página es un trabajo de clase de la asignatura Programación de Aplicaciones Web.
     </p>
-    <p><a href="#inicio">Volver al principio de la página</a></p>
-    <p>&copy; 2026 Alejandro Montesinos. Todos los derechos reservados.</p>
+    <p><a href="#inicio">Volver arriba</a></p>
+    <p>&copy; 2026 Alejandro Montesinos</p>
   </footer>
 
 </body>
