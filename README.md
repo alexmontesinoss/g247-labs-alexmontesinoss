@@ -13,4 +13,4 @@ CUNEF Escuela Politécnica Superior · Curso 2026-2027
 
 | Carpeta | Laboratorio | Tema |
 | --- | --- | --- |
-| `lab-01/` | L1 — Estructura de una página | Trayectoria deportiva personal (HTML semántico, sin CSS ni JS) |
+| `lab-01/` | L1 — Estructura de una página | Trayectoria deportiva personal|
