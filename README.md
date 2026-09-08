@@ -1,7 +1,7 @@
 # g247-labs-alexmontesinoss
 
 Laboratorios de **Programación de Aplicaciones Web (G247)**
-CUNEF Escuela Politécnica Superior - Curso 2026-2027
+CUNEF - Curso 2026-2027
 
 ## Datos
 
