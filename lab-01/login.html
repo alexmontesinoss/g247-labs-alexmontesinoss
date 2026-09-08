@@ -1,0 +1,85 @@
+<!--
+  Laboratorio 1 (segunda parte) - Sitio web con varias páginas
+  Programación de Aplicaciones Web (G247) - CUNEF Escuela Politécnica Superior
+  Autor: Alejandro Montesinos
+  Modalidad: individual
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso | Mi trayectoria deportiva</title>
+</head>
+
+<body>
+
+  <header>
+    <p>Alejandro Montesinos</p>
+    <h1>Acceso</h1>
+  </header>
+
+  <nav aria-label="Navegación principal">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="deportes.html">Deportes</a></li>
+      <li><a href="recuerdo.html">Mi mejor recuerdo</a></li>
+      <li><a href="login.html">Acceso</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section id="entrar">
+      <h2>Entra en tu cuenta</h2>
+
+      <p>
+        Escribe tu correo y tu contraseña para entrar. Los campos marcados son obligatorios.
+      </p>
+
+      <form>
+        <p>
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </p>
+
+        <p>
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required minlength="8">
+        </p>
+
+        <p>
+          <button type="submit">Sign in</button>
+        </p>
+      </form>
+    </section>
+
+    <section id="ayuda">
+      <h2>Si no puedes entrar</h2>
+      <p>Comprueba estas tres cosas antes de nada:</p>
+      <ul>
+        <li>Que el correo esté escrito completo, con la arroba y el dominio.</li>
+        <li>Que la contraseña tenga al menos ocho caracteres.</li>
+        <li>Que no tengas activado el bloqueo de mayúsculas.</li>
+      </ul>
+      <p>
+        Si sigues sin poder entrar, vuelve a la
+        <a href="index.html">portada</a> y prueba más tarde.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <h2>Contacto</h2>
+    <p>
+      Esta página es un trabajo de clase de la asignatura Programación de Aplicaciones Web.
+    </p>
+    <p><a href="index.html">Volver a la portada</a></p>
+    <p>&copy; 2026 Alejandro Montesinos</p>
+  </footer>
+
+</body>
+
+</html>

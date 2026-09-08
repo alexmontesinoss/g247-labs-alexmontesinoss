@@ -1,5 +1,5 @@
 <!--
-  Laboratorio 1 - Estructura de una página
+  Laboratorio 1 (segunda parte) - Sitio web con varias páginas
   Programación de Aplicaciones Web (G247) - CUNEF Escuela Politécnica Superior
   Autor: Alejandro Montesinos
   Modalidad: individual
@@ -10,29 +10,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi trayectoria deportiva | Alejandro Montesinos</title>
+  <title>Inicio | Mi trayectoria deportiva</title>
 </head>
 
 <body>
 
-  <header id="inicio">
+  <header>
+    <p>Alejandro Montesinos</p>
     <h1>Mi trayectoria deportiva</h1>
-    <p>Alejandro Montesinos &middot; estudiante de CUNEF</p>
   </header>
 
   <nav aria-label="Navegación principal">
     <ul>
-      <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#deportes">Deportes</a></li>
-      <li><a href="#destacado">Mi mejor recuerdo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="deportes.html">Deportes</a></li>
+      <li><a href="recuerdo.html">Mi mejor recuerdo</a></li>
+      <li><a href="login.html">Acceso</a></li>
     </ul>
   </nav>
 
   <main>
 
-    <section id="sobre-mi">
-      <h2>Sobre mí</h2>
+    <section id="quien-soy">
+      <h2>Quién soy</h2>
 
       <img src="img/trayectoria.svg"
            alt="Línea de tiempo con mis cuatro deportes en orden: fútbol, tenis, baloncesto y pádel"
@@ -41,89 +41,37 @@
       <p>
         Me llamo Alejandro, tengo 18 años y estudio en
         <a href="https://www.cunef.edu/" title="Web oficial de CUNEF Universidad">CUNEF</a>.
-        Llevo haciendo deporte desde
-        pequeño y he pasado por cuatro: fútbol, tenis, baloncesto y pádel. En esta página
-        cuento un poco de cada uno y el partido que mejor recuerdo.
-      </p>
-
-      <p>
-        Si me preguntas qué he sacado de todos estos años, te diría que lo que más cuenta es
-        no faltar a los entrenamientos. Los mejores compañeros que he tenido no eran los que
-        mejor jugaban, eran los que siempre estaban.
+        Llevo haciendo deporte desde pequeño y he pasado por cuatro: fútbol, tenis,
+        baloncesto y pádel. En esta web cuento cada uno de ellos y el partido que mejor
+        recuerdo.
       </p>
     </section>
 
-    <section id="deportes">
-      <h2>Deportes que he practicado</h2>
-
-      <p>Estos son los cuatro, por orden:</p>
-
-      <ol>
-        <li>Fútbol</li>
-        <li>Tenis</li>
-        <li>Baloncesto</li>
-        <li>Pádel</li>
-      </ol>
-
-      <h3>Fútbol</h3>
+    <section id="resumen-deportes">
+      <h2>Deportes</h2>
       <p>
-        Fue mi primer deporte y el que más me duró. Me apuntaron con seis años en el
-        Paracuellos F.C., que es el club de mi pueblo, y estuve unas siete temporadas, hasta
-        segundo de la ESO. Jugaba arriba, de delantero o de extremo. Me gustaba más el
-        extremo, porque puedes encarar y correr en vez de estar esperando el balón.
+        Empecé en el fútbol con seis años, seguí con el tenis, jugué al baloncesto durante
+        mi año de intercambio en Estados Unidos y ahora juego al pádel.
+        <a href="deportes.html">Los cuento uno por uno aquí</a>.
       </p>
-
-      <h3>Tenis</h3>
       <p>
-        Cuando dejé el fútbol me metí a tenis, en el club que tengo al lado de casa. El
-        cambio fue raro: en el tenis estás tú <em>solo</em>, no hay nadie a quien pasarle la bola
-        cuando te va mal. Empecé a competir, pero lo dejé porque me iba un año a Estados
-        Unidos.
-      </p>
-
-      <h3>Baloncesto</h3>
-      <p>
-        A este llegué de casualidad. Hace dos años me fui de intercambio a Estados Unidos, a
-        un colegio de
-        <a href="https://es.wikipedia.org/wiki/Maple_Lake_(Minnesota)"
-           title="Maple Lake, el pueblo de Minnesota donde estuve de intercambio"
-           target="_blank">Maple Lake</a>, un pueblo pequeño de Minnesota. Allí los deportes
-        van por temporadas de tres o cuatro meses en vez de durar todo el año, y la de
-        baloncesto es en invierno. Me apunté al equipo del colegio sin haber jugado nunca.
-      </p>
-
-      <p>
-        Entrenábamos todos los días después de clase. Los partidos no se parecían en nada a
-        lo de aquí: se juega en el polideportivo del colegio, con la banda de música tocando
-        en las gradas y un montón de gente del pueblo viéndolo. Yo estaba en el
-        <span lang="en">junior varsity</span>, que viene a ser el equipo B.
-      </p>
-
-      <h3>Pádel</h3>
-      <p>
-        Es lo que juego ahora, desde que volví de Estados Unidos. Después del tenis se
-        agradece volver a tener a alguien al lado. La pista es más pequeña y se puede jugar
-        con la pared, así que al principio le pegas fuerte a todo y no te sirve de nada.
+        Si solo te interesa uno, puedes ir directo al
+        <a href="deportes.html#tenis">tenis</a> o al
+        <a href="deportes.html#baloncesto">baloncesto</a>.
       </p>
     </section>
 
-    <section id="destacado">
+    <section id="resumen-recuerdo">
       <h2>Mi mejor recuerdo</h2>
 
       <article>
         <h3>Mi primer partido en Minnesota</h3>
         <p>
-          Llevaba tres semanas en el colegio cuando jugué mi primer partido. Me sabía los
-          nombres de la mitad del equipo y las jugadas me las habían explicado en inglés y a
-          gritos, así que salí a la pista sin tener muy claro lo que tenía que hacer.
+          Llevaba tres semanas en el colegio y ya me tocaba jugar, sin saberme las jugadas ni
+          los nombres de la mitad del equipo. No metí ni un punto y aun así es el partido que
+          mejor recuerdo de todos los que he jugado.
         </p>
-        <p>
-          Lo que más me sorprendió fue el ambiente. Aquí había jugado siete temporadas de
-          fútbol y no venía a vernos nadie más que los padres. Allí el polideportivo estaba
-          lleno un martes por la tarde. No metí ni un punto y me equivoqué en casi
-          todos los bloqueos, pero es el partido que mejor recuerdo de todos los que he
-          jugado.
-        </p>
+        <p><a href="recuerdo.html">Leer la historia completa</a></p>
       </article>
     </section>
 
@@ -139,12 +87,12 @@
 
   </main>
 
-  <footer id="contacto">
+  <footer>
     <h2>Contacto</h2>
     <p>
       Esta página es un trabajo de clase de la asignatura Programación de Aplicaciones Web.
     </p>
-    <p><a href="#inicio">Volver arriba</a></p>
+    <p><a href="index.html">Volver a la portada</a></p>
     <p>&copy; 2026 Alejandro Montesinos</p>
   </footer>
 
