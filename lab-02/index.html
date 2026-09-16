@@ -1,0 +1,100 @@
+<!--
+  Laboratorio 2 - Aplicacion de CSS al sitio propio
+  Programacion de Aplicaciones Web (G247) - CUNEF Escuela Politecnica Superior
+  Autor: Alejandro Montesinos
+  Modalidad: individual
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Inicio | Mi trayectoria deportiva</title>
+</head>
+
+<body>
+
+  <header>
+    <p>Alejandro Montesinos</p>
+    <h1>Mi trayectoria deportiva</h1>
+  </header>
+
+  <nav aria-label="Navegación principal">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="deportes.html">Deportes</a></li>
+      <li><a href="recuerdo.html">Mi mejor recuerdo</a></li>
+      <li><a href="login.html">Acceso</a></li>
+    </ul>
+  </nav>
+
+  <main class="portada">
+
+    <section id="quien-soy">
+      <h2>Quién soy</h2>
+
+      <img src="img/trayectoria.svg"
+           alt="Línea de tiempo con mis cuatro deportes en orden: fútbol, tenis, baloncesto y pádel"
+           width="640" height="220">
+
+      <p>
+        Me llamo Alejandro, tengo 18 años y estudio en
+        <a href="https://www.cunef.edu/" title="Web oficial de CUNEF Universidad">CUNEF</a>.
+        He pasado por cuatro deportes y aquí cuento un poco de cada uno.
+      </p>
+    </section>
+
+    <section id="resumen-deportes">
+      <h2>Deportes</h2>
+      <p>
+        Fútbol, tenis, baloncesto y pádel, por ese orden.
+        <a href="deportes.html">Los cuento uno por uno aquí</a>.
+      </p>
+      <p>
+        O ve directo al
+        <a href="deportes.html#futbol">fútbol</a>, al
+        <a href="deportes.html#tenis">tenis</a>, al
+        <a href="deportes.html#baloncesto">baloncesto</a> o al
+        <a href="deportes.html#padel">pádel</a>.
+      </p>
+    </section>
+
+    <section id="resumen-recuerdo">
+      <h2>Mi mejor recuerdo</h2>
+
+      <article>
+        <h3>Mi primer partido en Minnesota</h3>
+        <p>
+          Llevaba tres semanas en el colegio y ya me tocaba jugar. No metí ni un punto y aun
+          así es el partido que mejor recuerdo.
+        </p>
+        <p><a href="recuerdo.html">Leer la historia completa</a></p>
+      </article>
+    </section>
+
+    <aside>
+      <h2>Ficha rápida</h2>
+      <ul>
+        <li>Deportes: cuatro</li>
+        <li>El primero: fútbol, con seis años</li>
+        <li>El de ahora: pádel</li>
+      </ul>
+    </aside>
+
+  </main>
+
+  <footer>
+    <h2>Contacto</h2>
+    <p>
+      Esta web la he hecho como trabajo de clase para la asignatura de Programación de
+      Aplicaciones Web.
+    </p>
+    <p><a href="index.html">Volver a la portada</a></p>
+    <p>&copy; 2026 Alejandro Montesinos</p>
+  </footer>
+
+</body>
+
+</html>
