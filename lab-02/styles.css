@@ -81,3 +81,62 @@ nav a:hover {
   color: #0969da;
   text-decoration: underline;
 }
+
+/* ---------------------------------------------------------------------
+   4. COMPOSICION PRINCIPAL
+   Por defecto Flexbox en columna, porque deportes, recuerdo y login
+   tienen una estructura lineal. La portada lleva class="portada" y usa
+   Grid, porque es la unica que tiene un <aside> al lado.
+--------------------------------------------------------------------- */
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+main.portada {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+main.portada #quien-soy {
+  grid-column: 1 / -1;
+}
+
+main.portada #resumen-deportes,
+main.portada #resumen-recuerdo {
+  grid-column: 1;
+}
+
+main.portada aside {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+}
+
+/* ---------------------------------------------------------------------
+   5. SECCIONES Y TIPOGRAFIA
+--------------------------------------------------------------------- */
+
+section h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #d8dee4;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+main a {
+  color: #0969da;
+}
+
