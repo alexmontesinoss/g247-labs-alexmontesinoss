@@ -1,0 +1,321 @@
+/*
+  styles.css — Laboratorio 2, segunda parte
+  Programacion de Aplicaciones Web (G247) - CUNEF Escuela Politecnica Superior
+
+  Autor: Alejandro Montesinos
+  Modalidad: individual
+
+  Hoja de estilos unica, enlazada desde las cuatro paginas del sitio.
+  Mismo orden que la practica guiada de la primera parte.
+*/
+
+/* ---------------------------------------------------------------------
+   1. RESET
+   Igual que en la practica: border-box en todo, y el body a cero.
+--------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2328;
+  background-color: #ffffff;
+}
+
+/* ---------------------------------------------------------------------
+   2. HEADER (Flexbox)
+   Dos hijos: mi nombre y el titulo de la pagina. Se separan a los
+   extremos y se centran en vertical.
+--------------------------------------------------------------------- */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 2rem;
+}
+
+header p {
+  margin: 0;
+  font-weight: 600;
+  color: #57606a;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+/* ---------------------------------------------------------------------
+   3. NAVEGACION (Flexbox)
+   El <ul> pasa a ser una fila. Identico en las cuatro paginas.
+--------------------------------------------------------------------- */
+
+nav {
+  padding: 0 2rem;
+  border-bottom: 1px solid #d8dee4;
+  background-color: #f6f8fa;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0;
+}
+
+nav a {
+  color: #57606a;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #0969da;
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------
+   4. COMPOSICION PRINCIPAL
+   Por defecto Flexbox en columna, porque deportes, recuerdo y login
+   tienen una estructura lineal. La portada lleva class="portada" y usa
+   Grid, porque es la unica que tiene un <aside> al lado.
+--------------------------------------------------------------------- */
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+main.portada {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+main.portada #quien-soy {
+  grid-column: 1 / -1;
+}
+
+main.portada #resumen-deportes,
+main.portada #resumen-recuerdo {
+  grid-column: 1;
+}
+
+main.portada aside {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+}
+
+/* ---------------------------------------------------------------------
+   5. SECCIONES Y TIPOGRAFIA
+--------------------------------------------------------------------- */
+
+section h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #d8dee4;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+main a {
+  color: #0969da;
+}
+
+/* ---------------------------------------------------------------------
+   6. CONTENIDO REPETIDO: los <article>
+   Aparecen en la portada (el resumen) y en recuerdo.html (completo).
+   Misma tarjeta en los dos sitios, para que se vean consistentes.
+--------------------------------------------------------------------- */
+
+article {
+  padding: 1.25rem;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+}
+
+article h3 {
+  margin-top: 0;
+}
+
+article p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------------
+   7. BARRA LATERAL
+   align-self: start evita que se estire a lo alto de las dos filas.
+--------------------------------------------------------------------- */
+
+aside {
+  align-self: start;
+  padding: 1.25rem;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  background-color: #f6f8fa;
+}
+
+aside h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+aside ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #57606a;
+}
+
+/* ---------------------------------------------------------------------
+   8. IMAGENES
+--------------------------------------------------------------------- */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------------------------------------------------------------------
+   9. FORMULARIO DE ACCESO (apartado 4.3)
+   Tarjeta centrada, etiquetas en bloque, campos de anchura completa,
+   foco visible y boton con hover.
+--------------------------------------------------------------------- */
+
+form {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  background-color: #f6f8fa;
+}
+
+form p {
+  margin: 0 0 1rem;
+}
+
+form p:last-child {
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d8dee4;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: #ffffff;
+}
+
+input:focus {
+  outline: 2px solid #0969da;
+  outline-offset: 1px;
+  border-color: #0969da;
+}
+
+button {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #0969da;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0550ae;
+}
+
+/* ---------------------------------------------------------------------
+   10. PIE
+--------------------------------------------------------------------- */
+
+footer {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #d8dee4;
+  background-color: #f6f8fa;
+  color: #57606a;
+}
+
+footer h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+footer p {
+  margin: 0 0 0.35rem;
+}
+
+footer a {
+  color: #0969da;
+}
+
+/* ---------------------------------------------------------------------
+   11. BREAKPOINT RESPONSIVE
+   Cambio real de composicion: la portada pasa de dos columnas a una,
+   y la cabecera apila el nombre y el titulo.
+--------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  main.portada {
+    grid-template-columns: 1fr;
+  }
+
+  main.portada > * {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+  }
+
+  nav {
+    padding: 0 1.25rem;
+  }
+
+  nav ul {
+    gap: 1rem;
+  }
+
+  main {
+    padding: 1.5rem 1.25rem;
+  }
+
+  footer {
+    padding: 1.25rem;
+  }
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" viewBox="0 0 640 220" role="img" aria-label="Linea de tiempo con cuatro deportes: futbol, tenis, baloncesto y padel">
+
+  <rect x="0.5" y="0.5" width="639" height="219" rx="4" fill="#fcfcfa" stroke="#dddad2" stroke-width="1"/>
+
+  <line x1="80" y1="120" x2="560" y2="120" stroke="#4a4a4a" stroke-width="2"/>
+
+  <circle cx="80"  cy="120" r="13" fill="#2d5f8b"/>
+  <circle cx="240" cy="120" r="13" fill="#2d5f8b"/>
+  <circle cx="400" cy="120" r="13" fill="#2d5f8b"/>
+  <circle cx="560" cy="120" r="13" fill="#b8621b"/>
+
+  <g font-family="Georgia, 'Times New Roman', Times, serif" text-anchor="middle">
+
+    <text x="80"  y="92" font-size="16" fill="#1a1a1a">Fútbol</text>
+    <text x="80"  y="152" font-size="11" fill="#555555">desde los 6 años</text>
+    <text x="80"  y="167" font-size="11" fill="#555555">Paracuellos F.C.</text>
+
+    <text x="240" y="92" font-size="16" fill="#1a1a1a">Tenis</text>
+    <text x="240" y="152" font-size="11" fill="#555555">al dejar el fútbol</text>
+    <text x="240" y="167" font-size="11" fill="#555555">club del pueblo</text>
+
+    <text x="400" y="92" font-size="16" fill="#1a1a1a">Baloncesto</text>
+    <text x="400" y="152" font-size="11" fill="#555555">año de intercambio</text>
+    <text x="400" y="167" font-size="11" fill="#555555">Maple Lake, Minnesota</text>
+
+    <text x="560" y="92" font-size="16" fill="#1a1a1a">Pádel</text>
+    <text x="560" y="152" font-size="11" fill="#555555">ahora</text>
+
+  </g>
+
+</svg>
