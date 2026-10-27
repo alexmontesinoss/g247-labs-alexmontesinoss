@@ -1,0 +1,16 @@
+{
+  "name": "practica1-alejandro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Practica 1 - API REST de partidos y cliente web. G247 CUNEF.",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
