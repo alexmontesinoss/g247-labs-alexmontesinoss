@@ -1,0 +1,112 @@
+/*
+  src/controllers/partidosController.js
+  Practica 1 · Programacion de Aplicaciones Web (G247) · CUNEF EPS
+
+  Un controlador por operacion. Ninguno toca el array: todos piden las
+  cosas al almacen (src/data/store.js), que es el unico que lo conoce.
+*/
+
+const store = require("../data/store");
+
+// Los unicos campos que el cliente puede enviar. El id NO esta en la lista:
+// lo genera el servidor y, si el cliente lo manda, se ignora.
+const CAMPOS = ["rival", "puntos", "ganado", "deporte", "temporada"];
+
+// Para POST y PUT: el recurso ENTERO. Lo que el cliente no envie queda a
+// undefined (o a null en temporada), no se hereda de lo que hubiera antes.
+function cuerpoCompleto(body) {
+  const datos = body || {};
+  return {
+    rival: datos.rival,
+    puntos: datos.puntos,
+    ganado: datos.ganado,
+    deporte: datos.deporte,
+    temporada: datos.temporada === undefined ? null : datos.temporada,
+  };
+}
+
+// Para PATCH: solo los campos que vienen de verdad en la peticion.
+// Los que no aparecen no se tocan, y los desconocidos se descartan aqui.
+function cuerpoParcial(body) {
+  const datos = body || {};
+  const cambios = {};
+  for (const campo of CAMPOS) {
+    if (datos[campo] !== undefined) {
+      cambios[campo] = datos[campo];
+    }
+  }
+  return cambios;
+}
+
+function noEncontrado(res) {
+  return res.status(404).json({ error: "Partido no encontrado" });
+}
+
+// GET /partidos
+function listPartidos(req, res) {
+  res.status(200).json(store.findAll());
+}
+
+// GET /partidos/:id
+function getPartido(req, res) {
+  // Un id que no sea numero se convierte en NaN, no encuentra nada y cae
+  // en el 404. El servidor no se rompe.
+  const partido = store.findById(Number(req.params.id));
+
+  if (!partido) {
+    return noEncontrado(res);
+  }
+
+  res.status(200).json(partido);
+}
+
+// POST /partidos
+function createPartido(req, res) {
+  const nuevo = store.insert(cuerpoCompleto(req.body));
+
+  // 201 Created + Location, que indica donde ha quedado el recurso nuevo.
+  res.status(201).location(`/partidos/${nuevo.id}`).json(nuevo);
+}
+
+// PUT /partidos/:id — sustituye el recurso entero
+function replacePartido(req, res) {
+  const sustituido = store.replace(Number(req.params.id), cuerpoCompleto(req.body));
+
+  if (!sustituido) {
+    return noEncontrado(res);
+  }
+
+  res.status(200).json(sustituido);
+}
+
+// PATCH /partidos/:id — cambia solo lo que llega
+function patchPartido(req, res) {
+  const actualizado = store.update(Number(req.params.id), cuerpoParcial(req.body));
+
+  if (!actualizado) {
+    return noEncontrado(res);
+  }
+
+  res.status(200).json(actualizado);
+}
+
+// DELETE /partidos/:id
+function deletePartido(req, res) {
+  const borrado = store.remove(Number(req.params.id));
+
+  if (!borrado) {
+    return noEncontrado(res);
+  }
+
+  // 204 No Content: ha ido bien y no hay nada que devolver.
+  res.status(204).end();
+}
+
+module.exports = {
+  listPartidos,
+  getPartido,
+  createPartido,
+  replacePartido,
+  patchPartido,
+  deletePartido,
+};
