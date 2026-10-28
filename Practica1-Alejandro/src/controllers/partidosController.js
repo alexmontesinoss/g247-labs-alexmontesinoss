@@ -7,6 +7,7 @@
 */
 
 const store = require("../data/store");
+const { validatePartido } = require("../validators/partidoValidator");
 
 // Los unicos campos que el cliente puede enviar. El id NO esta en la lista:
 // lo genera el servidor y, si el cliente lo manda, se ignora.
@@ -42,6 +43,12 @@ function noEncontrado(res) {
   return res.status(404).json({ error: "Partido no encontrado" });
 }
 
+// El 400 devuelve SIEMPRE la lista completa de fallos, no el primero,
+// para que el cliente pueda pintar cada uno debajo de su campo.
+function datosInvalidos(res, errors) {
+  return res.status(400).json({ errors });
+}
+
 // GET /partidos
 function listPartidos(req, res) {
   res.status(200).json(store.findAll());
@@ -62,6 +69,13 @@ function getPartido(req, res) {
 
 // POST /partidos
 function createPartido(req, res) {
+  // Validar ANTES de tocar el almacen: si falla, no se crea nada.
+  const { valid, errors } = validatePartido(req.body);
+
+  if (!valid) {
+    return datosInvalidos(res, errors);
+  }
+
   const nuevo = store.insert(cuerpoCompleto(req.body));
 
   // 201 Created + Location, que indica donde ha quedado el recurso nuevo.
@@ -70,22 +84,50 @@ function createPartido(req, res) {
 
 // PUT /partidos/:id — sustituye el recurso entero
 function replacePartido(req, res) {
-  const sustituido = store.replace(Number(req.params.id), cuerpoCompleto(req.body));
+  const id = Number(req.params.id);
 
-  if (!sustituido) {
+  // Primero el 404: si el partido no existe, da igual lo que mande el cliente.
+  if (!store.findById(id)) {
     return noEncontrado(res);
   }
+
+  // PUT sustituye entero, asi que exige el recurso completo.
+  const { valid, errors } = validatePartido(req.body);
+
+  if (!valid) {
+    return datosInvalidos(res, errors);
+  }
+
+  const sustituido = store.replace(id, cuerpoCompleto(req.body));
 
   res.status(200).json(sustituido);
 }
 
 // PATCH /partidos/:id — cambia solo lo que llega
 function patchPartido(req, res) {
-  const actualizado = store.update(Number(req.params.id), cuerpoParcial(req.body));
+  const id = Number(req.params.id);
 
-  if (!actualizado) {
+  if (!store.findById(id)) {
     return noEncontrado(res);
   }
+
+  const cambios = cuerpoParcial(req.body);
+
+  // Un PATCH sin ningun campo conocido no tiene sentido.
+  if (Object.keys(cambios).length === 0) {
+    return datosInvalidos(res, [
+      { field: "body", message: "Hay que enviar al menos un campo que modificar." },
+    ]);
+  }
+
+  // partial: true -> solo se revisan los campos que han llegado.
+  const { valid, errors } = validatePartido(cambios, { partial: true });
+
+  if (!valid) {
+    return datosInvalidos(res, errors);
+  }
+
+  const actualizado = store.update(id, cambios);
 
   res.status(200).json(actualizado);
 }
