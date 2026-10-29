@@ -17,6 +17,13 @@ app.use(express.json()); // convierte el cuerpo JSON en req.body
 app.use(logger);         // una linea por peticion
 
 // --- rutas ---
+
+// Comprobacion de vida: sirve para saber de un vistazo si la API responde,
+// sin tocar datos. Viene del laboratorio 5.
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use("/partidos", partidosRouter);
 
 // --- 404 en JSON para cualquier ruta que no exista ---
