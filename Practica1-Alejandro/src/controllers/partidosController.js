@@ -8,6 +8,12 @@
 
 const store = require("../data/store");
 const { validatePartido } = require("../validators/partidoValidator");
+const {
+  filtrar,
+  ordenar,
+  paginar,
+  calcularStats,
+} = require("../utils/consultas");
 
 // Los unicos campos que el cliente puede enviar. El id NO esta en la lista:
 // lo genera el servidor y, si el cliente lo manda, se ignora.
@@ -50,8 +56,29 @@ function datosInvalidos(res, errors) {
 }
 
 // GET /partidos
+// Admite ?search= &deporte= &ganado= &temporada= &sort= &order= &limit= &offset=
+// Se pueden combinar todos. Los parametros que no reconocemos se ignoran.
 function listPartidos(req, res) {
-  res.status(200).json(store.findAll());
+  const todos = store.findAll();
+
+  // El orden importa: primero se filtra, luego se ordena lo que ha
+  // quedado, y solo al final se corta la pagina.
+  const filtrados = filtrar(todos, req.query);
+  const ordenados = ordenar(filtrados, req.query);
+  const pagina = paginar(ordenados, req.query);
+
+  // Cuantos hay EN TOTAL una vez filtrado, antes de cortar la pagina.
+  // Va en una cabecera para que el cuerpo siga siendo una lista limpia.
+  res.set("X-Total-Count", String(filtrados.length));
+
+  res.status(200).json(pagina);
+}
+
+// GET /partidos/stats
+// Resumen de todos los partidos. Los filtros tambien valen aqui.
+function getStats(req, res) {
+  const filtrados = filtrar(store.findAll(), req.query);
+  res.status(200).json(calcularStats(filtrados));
 }
 
 // GET /partidos/:id
@@ -146,6 +173,7 @@ function deletePartido(req, res) {
 
 module.exports = {
   listPartidos,
+  getStats,
   getPartido,
   createPartido,
   replacePartido,

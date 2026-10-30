@@ -6,6 +6,7 @@
   es el pipeline que recorre cada peticion, de arriba a abajo.
 */
 
+const path = require("path");
 const express = require("express");
 const logger = require("./middleware/logger");
 const partidosRouter = require("./routes/partidos");
@@ -15,6 +16,12 @@ const app = express();
 // --- middleware, SIEMPRE antes de las rutas ---
 app.use(express.json()); // convierte el cuerpo JSON en req.body
 app.use(logger);         // una linea por peticion
+
+// --- contenido estatico ---
+// Todo lo que haya en public/ se sirve tal cual. Al pedir "/" Express
+// devuelve public/index.html el solito. Va ANTES del 404 de abajo, si no
+// nunca llegaria a mirar en la carpeta.
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // --- rutas ---
 
@@ -38,6 +45,16 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   // La traza completa se queda en la terminal del servidor...
   console.error(err.stack);
+
+  // Caso especial: express.json() no ha sabido leer el cuerpo porque el
+  // JSON venia mal escrito. Lo contamos como un error de validacion mas,
+  // con la misma forma { errors: [...] } que usa el resto de la API, en
+  // vez de soltarle al cliente el mensaje interno de Express en ingles.
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).json({
+      errors: [{ field: "body", message: "El cuerpo de la peticion no es JSON valido." }],
+    });
+  }
 
   // ...y al cliente solo le llega un mensaje, nunca la traza.
   const status = err.status || 500;
