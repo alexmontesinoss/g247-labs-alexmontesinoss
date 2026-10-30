@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis partidos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <div class="cabecera__titulo">
+      <h1>Mis partidos</h1>
+      <p class="cabecera__sub">Fútbol, tenis, baloncesto y pádel</p>
+    </div>
+
+    <!-- Las estadisticas se rellenan desde /partidos/stats -->
+    <dl class="resumen" id="resumen" aria-live="polite">
+      <div class="resumen__dato">
+        <dt>Partidos</dt>
+        <dd id="stat-total">—</dd>
+      </div>
+      <div class="resumen__dato">
+        <dt>Ganados</dt>
+        <dd id="stat-ganados">—</dd>
+      </div>
+      <div class="resumen__dato">
+        <dt>Victorias</dt>
+        <dd id="stat-porcentaje">—</dd>
+      </div>
+      <div class="resumen__dato">
+        <dt>Puntos</dt>
+        <dd id="stat-puntos">—</dd>
+      </div>
+    </dl>
+  </header>
+
+  <main class="contenido">
+
+    <!-- ---------- FORMULARIO ---------- -->
+    <section class="panel" aria-labelledby="titulo-form">
+      <h2 id="titulo-form">Añadir un partido</h2>
+
+      <!-- novalidate: queremos validar nosotros, no el navegador,
+           para poder enseñar los mismos mensajes que manda la API -->
+      <form id="formulario" novalidate>
+        <input type="hidden" id="campo-id">
+
+        <div class="campo">
+          <label for="campo-rival">Rival</label>
+          <input type="text" id="campo-rival" name="rival"
+                 placeholder="Algete C.F." autocomplete="off">
+          <p class="campo__error" id="error-rival"></p>
+        </div>
+
+        <div class="campo">
+          <label for="campo-puntos">Puntos</label>
+          <input type="number" id="campo-puntos" name="puntos" min="0" max="200">
+          <p class="campo__error" id="error-puntos"></p>
+        </div>
+
+        <div class="campo">
+          <label for="campo-deporte">Deporte</label>
+          <select id="campo-deporte" name="deporte">
+            <option value="">Elige uno</option>
+            <option value="futbol">Fútbol</option>
+            <option value="tenis">Tenis</option>
+            <option value="baloncesto">Baloncesto</option>
+            <option value="padel">Pádel</option>
+          </select>
+          <p class="campo__error" id="error-deporte"></p>
+        </div>
+
+        <div class="campo">
+          <label for="campo-temporada">Temporada <span class="opcional">(opcional)</span></label>
+          <input type="text" id="campo-temporada" name="temporada"
+                 placeholder="2024-25" autocomplete="off">
+          <p class="campo__error" id="error-temporada"></p>
+        </div>
+
+        <div class="campo campo--casilla">
+          <input type="checkbox" id="campo-ganado" name="ganado">
+          <label for="campo-ganado">Lo gané</label>
+          <p class="campo__error" id="error-ganado"></p>
+        </div>
+
+        <p class="campo__error" id="error-body"></p>
+
+        <div class="form__botones">
+          <button type="submit" class="boton boton--principal" id="boton-guardar">
+            Añadir partido
+          </button>
+          <button type="button" class="boton" id="boton-cancelar" hidden>
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ---------- FILTROS ---------- -->
+    <section class="panel" aria-labelledby="titulo-filtros">
+      <h2 id="titulo-filtros">Buscar y filtrar</h2>
+
+      <div class="filtros">
+        <div class="campo">
+          <label for="filtro-busqueda">Buscar rival</label>
+          <input type="search" id="filtro-busqueda" placeholder="Escribe un nombre"
+                 autocomplete="off">
+        </div>
+
+        <div class="campo">
+          <label for="filtro-deporte">Deporte</label>
+          <select id="filtro-deporte">
+            <option value="">Todos</option>
+            <option value="futbol">Fútbol</option>
+            <option value="tenis">Tenis</option>
+            <option value="baloncesto">Baloncesto</option>
+            <option value="padel">Pádel</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="filtro-resultado">Resultado</label>
+          <select id="filtro-resultado">
+            <option value="">Todos</option>
+            <option value="true">Solo ganados</option>
+            <option value="false">Solo perdidos</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="filtro-orden">Ordenar por</label>
+          <select id="filtro-orden">
+            <option value="id|asc">Más antiguos primero</option>
+            <option value="id|desc">Más recientes primero</option>
+            <option value="puntos|desc">Más puntos</option>
+            <option value="puntos|asc">Menos puntos</option>
+            <option value="rival|asc">Rival (A–Z)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- LISTA ---------- -->
+    <section class="panel" aria-labelledby="titulo-lista">
+      <div class="lista__cabecera">
+        <h2 id="titulo-lista">Partidos</h2>
+        <p class="contador" id="contador" aria-live="polite"></p>
+      </div>
+
+      <!-- Aviso de error: oculto hasta que haga falta -->
+      <p class="aviso aviso--error" id="aviso-error" role="alert" hidden></p>
+
+      <!-- Indicador de carga -->
+      <p class="aviso aviso--cargando" id="cargando" aria-live="polite" hidden>
+        Cargando…
+      </p>
+
+      <!-- Cuando no hay nada que enseñar -->
+      <p class="aviso aviso--vacio" id="vacio" hidden>
+        No hay ningún partido que encaje con lo que buscas.
+      </p>
+
+      <ul class="partidos" id="partidos"></ul>
+
+      <nav class="paginacion" id="paginacion" aria-label="Páginas" hidden>
+        <button type="button" class="boton" id="boton-anterior">← Anterior</button>
+        <span id="pagina-actual"></span>
+        <button type="button" class="boton" id="boton-siguiente">Siguiente →</button>
+      </nav>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

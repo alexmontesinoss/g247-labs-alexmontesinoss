@@ -1,0 +1,375 @@
+/*
+  public/styles.css
+  Practica 1 · Programacion de Aplicaciones Web (G247) · CUNEF EPS
+
+  Organizacion:
+    1. Variables de color
+    2. Base
+    3. Cabecera (Flexbox)
+    4. Paneles y formulario (Grid)
+    5. Lista de partidos
+    6. Avisos (error, cargando, vacio)
+    7. Accesibilidad: foco visible
+    8. Movil: un unico punto de ruptura
+*/
+
+/* ---------- 1. VARIABLES ---------- */
+:root {
+  --verde:        #1f7a4d;
+  --verde-claro:  #e6f4ec;
+  --rojo:         #b3261e;
+  --rojo-claro:   #fce9e7;
+  --texto:        #1c1f23;
+  --texto-suave:  #5c6670;
+  --borde:        #d9dee3;
+  --fondo:        #f4f6f8;
+  --blanco:       #ffffff;
+  --radio:        10px;
+  --sombra:       0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- 2. BASE ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+/* ---------- 3. CABECERA (Flexbox) ---------- */
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+
+  background: var(--verde);
+  color: var(--blanco);
+  padding: 1.75rem 2rem;
+}
+
+.cabecera h1 {
+  font-size: 1.6rem;
+}
+
+.cabecera__sub {
+  margin: 0.25rem 0 0;
+  opacity: 0.85;
+  font-size: 0.9rem;
+}
+
+/* El resumen tambien es Flexbox, dentro de la cabecera */
+.resumen {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.resumen__dato dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.resumen__dato dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ---------- 4. PANELES Y FORMULARIO (Grid) ---------- */
+.contenido {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+
+  display: grid;
+  gap: 1.25rem;
+}
+
+.panel {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+/* El formulario y los filtros se reparten en columnas automaticas */
+form,
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.campo label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.opcional {
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.campo input,
+.campo select {
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--blanco);
+  color: var(--texto);
+}
+
+/* La casilla va en linea, no en columna */
+.campo--casilla {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: center;
+}
+
+.campo--casilla input {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Mensaje de error debajo de cada campo. Ocupa sitio solo cuando hay texto. */
+.campo__error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--rojo);
+}
+
+.campo__error:empty {
+  display: none;
+}
+
+/* Cuando un campo tiene error, se le pinta el borde */
+.campo input[aria-invalid="true"],
+.campo select[aria-invalid="true"] {
+  border-color: var(--rojo);
+  background: var(--rojo-claro);
+}
+
+.form__botones {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* ---------- BOTONES ---------- */
+.boton {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--blanco);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.boton:hover {
+  background: var(--fondo);
+}
+
+.boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.boton--principal {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: var(--blanco);
+  font-weight: 600;
+}
+
+.boton--principal:hover {
+  background: #19613d;
+}
+
+.boton--peligro {
+  color: var(--rojo);
+  border-color: var(--rojo);
+}
+
+.boton--peligro:hover {
+  background: var(--rojo-claro);
+}
+
+.boton--pequeno {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- 5. LISTA DE PARTIDOS ---------- */
+.lista__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.contador {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.partidos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.partido {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--texto-suave);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+}
+
+.partido--ganado {
+  border-left-color: var(--verde);
+}
+
+.partido--perdido {
+  border-left-color: var(--rojo);
+}
+
+.partido__rival {
+  font-weight: 600;
+  flex: 1 1 180px;
+}
+
+.partido__datos {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.etiqueta {
+  background: var(--fondo);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.etiqueta--ganado {
+  background: var(--verde-claro);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.etiqueta--perdido {
+  background: var(--rojo-claro);
+  color: var(--rojo);
+  font-weight: 600;
+}
+
+.partido__acciones {
+  display: flex;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+/* ---------- 6. AVISOS ---------- */
+.aviso {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.aviso--error {
+  background: var(--rojo-claro);
+  color: var(--rojo);
+  border: 1px solid var(--rojo);
+}
+
+.aviso--cargando,
+.aviso--vacio {
+  background: var(--fondo);
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+/* ---------- 7. FOCO VISIBLE ---------- */
+/* Nunca quitamos el contorno del foco: es como se navega con el teclado. */
+:focus-visible {
+  outline: 3px solid #0b63ce;
+  outline-offset: 2px;
+}
+
+/* ---------- 8. MOVIL: un unico punto de ruptura ---------- */
+@media (max-width: 640px) {
+  .cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
+  }
+
+  .resumen {
+    gap: 1.25rem;
+  }
+
+  .resumen__dato dd {
+    font-size: 1.2rem;
+  }
+
+  /* En movil cada campo ocupa el ancho entero */
+  form,
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .partido__acciones {
+    margin-left: 0;
+    width: 100%;
+  }
+}
