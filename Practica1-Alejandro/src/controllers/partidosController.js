@@ -19,16 +19,44 @@ const {
 // lo genera el servidor y, si el cliente lo manda, se ignora.
 const CAMPOS = ["rival", "puntos", "ganado", "deporte", "temporada"];
 
+/*
+  El :id de la URL llega SIEMPRE como texto. Number() es demasiado
+  generoso: convierte "1e1" en 10 y "03" en 3, asi que /partidos/1e1
+  devolvia el partido 10 y un DELETE podia borrar el que no era.
+  Aqui exigimos que sean solo digitos antes de convertir.
+*/
+function idDeRuta(texto) {
+  const digitos = "0123456789";
+
+  if (typeof texto !== "string" || texto.length === 0) {
+    return null;
+  }
+  for (let i = 0; i < texto.length; i++) {
+    if (!digitos.includes(texto[i])) {
+      return null;
+    }
+  }
+
+  return Number(texto);
+}
+
+// El validador mide el rival sin los espacios de los extremos, asi que
+// lo guardamos igual de recortado. Si no, un rival de 80 caracteres con
+// espacios alrededor se almacenaba con 84 y se saltaba el maximo.
+function limpiarTexto(valor) {
+  return typeof valor === "string" ? valor.trim() : valor;
+}
+
 // Para POST y PUT: el recurso ENTERO. Lo que el cliente no envie queda a
 // undefined (o a null en temporada), no se hereda de lo que hubiera antes.
 function cuerpoCompleto(body) {
   const datos = body || {};
   return {
-    rival: datos.rival,
+    rival: limpiarTexto(datos.rival),
     puntos: datos.puntos,
     ganado: datos.ganado,
     deporte: datos.deporte,
-    temporada: datos.temporada === undefined ? null : datos.temporada,
+    temporada: datos.temporada === undefined ? null : limpiarTexto(datos.temporada),
   };
 }
 
@@ -39,7 +67,7 @@ function cuerpoParcial(body) {
   const cambios = {};
   for (const campo of CAMPOS) {
     if (datos[campo] !== undefined) {
-      cambios[campo] = datos[campo];
+      cambios[campo] = limpiarTexto(datos[campo]);
     }
   }
   return cambios;
@@ -85,7 +113,7 @@ function getStats(req, res) {
 function getPartido(req, res) {
   // Un id que no sea numero se convierte en NaN, no encuentra nada y cae
   // en el 404. El servidor no se rompe.
-  const partido = store.findById(Number(req.params.id));
+  const partido = store.findById(idDeRuta(req.params.id));
 
   if (!partido) {
     return noEncontrado(res);
@@ -111,7 +139,7 @@ function createPartido(req, res) {
 
 // PUT /partidos/:id — sustituye el recurso entero
 function replacePartido(req, res) {
-  const id = Number(req.params.id);
+  const id = idDeRuta(req.params.id);
 
   // Primero el 404: si el partido no existe, da igual lo que mande el cliente.
   if (!store.findById(id)) {
@@ -132,7 +160,7 @@ function replacePartido(req, res) {
 
 // PATCH /partidos/:id — cambia solo lo que llega
 function patchPartido(req, res) {
-  const id = Number(req.params.id);
+  const id = idDeRuta(req.params.id);
 
   if (!store.findById(id)) {
     return noEncontrado(res);
@@ -161,7 +189,7 @@ function patchPartido(req, res) {
 
 // DELETE /partidos/:id
 function deletePartido(req, res) {
-  const borrado = store.remove(Number(req.params.id));
+  const borrado = store.remove(idDeRuta(req.params.id));
 
   if (!borrado) {
     return noEncontrado(res);

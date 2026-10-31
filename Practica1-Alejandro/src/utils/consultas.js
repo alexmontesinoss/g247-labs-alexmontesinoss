@@ -21,6 +21,19 @@ const CAMPOS_ORDENABLES = ["id", "rival", "puntos", "deporte", "temporada"];
 // Tope de seguridad: aunque pidan limit=99999, no mandamos mas de esto.
 const LIMITE_MAXIMO = 100;
 
+/*
+  Si un parametro llega repetido ("?deporte=tenis&deporte=padel"), Express
+  lo entrega como array en vez de como texto. Nos quedamos con el primero.
+  Sin esto el filtro se caia entero y se devolvia la coleccion completa,
+  que es justo lo contrario de lo que el cliente habia pedido.
+*/
+function primerValor(valor) {
+  if (Array.isArray(valor)) {
+    return valor.length > 0 ? valor[0] : undefined;
+  }
+  return valor;
+}
+
 // Convierte el texto de la URL en numero entero, o devuelve null si no
 // se puede. Ojo: en una URL TODO llega como texto, hasta los numeros.
 function aEnteroPositivo(texto) {
@@ -41,30 +54,35 @@ function aEnteroPositivo(texto) {
 function filtrar(lista, query) {
   let resultado = lista;
 
+  const search = primerValor(query.search);
+  const ganado = primerValor(query.ganado);
+  const deporte = primerValor(query.deporte);
+  const temporada = primerValor(query.temporada);
+
   // search: texto libre dentro del nombre del rival, sin distinguir
   // mayusculas. Nada de expresiones regulares: toLowerCase + includes.
-  if (typeof query.search === "string" && query.search.trim() !== "") {
-    const buscado = query.search.trim().toLowerCase();
+  if (typeof search === "string" && search.trim() !== "") {
+    const buscado = search.trim().toLowerCase();
     resultado = resultado.filter((p) => p.rival.toLowerCase().includes(buscado));
   }
 
   // ganado: en la URL llega como el TEXTO "true" o "false", nunca como
   // booleano, asi que hay que compararlo con comillas.
-  if (query.ganado === "true") {
+  if (ganado === "true") {
     resultado = resultado.filter((p) => p.ganado === true);
-  } else if (query.ganado === "false") {
+  } else if (ganado === "false") {
     resultado = resultado.filter((p) => p.ganado === false);
   }
   // Cualquier otro valor ("si", "1", "") se ignora: no filtra nada.
 
   // deporte: categoria exacta.
-  if (typeof query.deporte === "string" && query.deporte.trim() !== "") {
-    resultado = resultado.filter((p) => p.deporte === query.deporte);
+  if (typeof deporte === "string" && deporte.trim() !== "") {
+    resultado = resultado.filter((p) => p.deporte === deporte);
   }
 
   // temporada: categoria exacta.
-  if (typeof query.temporada === "string" && query.temporada.trim() !== "") {
-    resultado = resultado.filter((p) => p.temporada === query.temporada);
+  if (typeof temporada === "string" && temporada.trim() !== "") {
+    resultado = resultado.filter((p) => p.temporada === temporada);
   }
 
   return resultado;
@@ -73,12 +91,13 @@ function filtrar(lista, query) {
 // --- 2. ORDENAR ---
 function ordenar(lista, query) {
   // Si no piden orden, o piden un campo que no existe, se queda como esta.
-  if (!CAMPOS_ORDENABLES.includes(query.sort)) {
+  const campo = primerValor(query.sort);
+
+  if (!CAMPOS_ORDENABLES.includes(campo)) {
     return lista;
   }
 
-  const campo = query.sort;
-  const descendente = query.order === "desc";
+  const descendente = primerValor(query.order) === "desc";
 
   // Copia con [...lista]: sin esto, .sort() cambiaria el array del almacen
   // y el orden se quedaria pegado para las siguientes peticiones.
@@ -109,12 +128,16 @@ function ordenar(lista, query) {
 // --- 3. PAGINAR ---
 // Devuelve solo el trozo pedido. offset = cuantos saltar, limit = cuantos coger.
 function paginar(lista, query) {
-  const offset = aEnteroPositivo(query.offset) || 0;
-  let limit = aEnteroPositivo(query.limit);
+  const offset = aEnteroPositivo(primerValor(query.offset)) || 0;
+  let limit = aEnteroPositivo(primerValor(query.limit));
 
+  // Sin limit se devuelve TODO. El tope de 100 es para los limit que pide
+  // el cliente; antes se aplicaba tambien cuando no pedia ninguno, y la
+  // lista se cortaba en 100 sin que nadie se enterase.
   if (limit === null) {
-    limit = lista.length; // sin limit, se devuelve todo
+    return lista.slice(offset);
   }
+
   if (limit > LIMITE_MAXIMO) {
     limit = LIMITE_MAXIMO;
   }

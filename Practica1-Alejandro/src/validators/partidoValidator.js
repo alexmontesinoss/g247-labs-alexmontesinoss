@@ -62,7 +62,13 @@ function validatePartido(body, opciones) {
       errors.push({ field: "rival", message: "El rival es obligatorio." });
     } else if (typeof rival !== "string") {
       errors.push({ field: "rival", message: "El rival debe ser texto." });
-    } else if (rival.trim().length < RIVAL_MIN || rival.trim().length > RIVAL_MAX) {
+    } else if (
+      // [...texto] parte la cadena en CARACTERES de verdad. Con .length
+      // un emoji contaria como dos, porque JavaScript mide en unidades
+      // UTF-16, y entonces la regla "entre 2 y 80" dejaria de ser cierta.
+      [...rival.trim()].length < RIVAL_MIN ||
+      [...rival.trim()].length > RIVAL_MAX
+    ) {
       errors.push({
         field: "rival",
         message: `El rival debe tener entre ${RIVAL_MIN} y ${RIVAL_MAX} caracteres.`,
@@ -124,7 +130,7 @@ function validatePartido(body, opciones) {
 
     if (typeof temporada !== "string") {
       errors.push({ field: "temporada", message: "La temporada debe ser texto." });
-    } else if (!formatoTemporada(temporada)) {
+    } else if (!formatoTemporada(temporada.trim())) {
       errors.push({
         field: "temporada",
         message: "La temporada debe tener el formato AAAA-AA, por ejemplo 2018-19.",
