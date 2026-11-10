@@ -17,7 +17,7 @@ test("health route is available", async () => {
   assert.deepEqual(response.body, { status: "ok" });
 });
 
-test.skip("task routes require a token — enable after implementing auth", async () => {
+test("task routes require a token", async () => {
   const response = await request(buildApp(db)).get("/tasks").timeout(1000);
   assert.equal(response.status, 401);
 });
