@@ -1,11 +1,9 @@
 /*
-  Starter — src/routes/tasks.js
+  src/routes/tasks.js
   Session 27 Lab · Web Application Programming (G247) · CUNEF EPS
-  Week 8 · Session 27 · Practice (AF2) · Pair work
 
-  Paste this file into src/routes/tasks.js. This GROWS the Session 18 router:
-  the five CRUD routes are now PROTECTED and the write routes run through the
-  Zod validator.
+  This GROWS the Session 18 router: the five CRUD routes are now PROTECTED
+  and the write routes run through the Zod validator.
 
   This router is mounted BEHIND the auth middleware in app.js:
       app.use("/tasks", auth, buildTasksRouter(tasksController));
@@ -17,14 +15,20 @@
 const express = require("express");
 const { taskSchema, validate } = require("../validators/taskSchema");
 
+// El router sigue sin tener logica: solo dice que URL va a que funcion, y por
+// que filtros pasa antes de llegar.
 function buildTasksRouter(tasksController) {
   const router = express.Router();
 
-  // TODO: GET    "/"    -> tasksController.list    (paginated, owner-scoped)
-  // TODO: GET    "/:id" -> tasksController.getOne  (404 / 403 / 200)
-  // TODO: POST   "/"    -> validate(taskSchema), tasksController.create
-  // TODO: PUT    "/:id" -> validate(taskSchema), tasksController.update
-  // TODO: DELETE "/:id" -> tasksController.remove
+  router.get("/", tasksController.list);
+  router.get("/:id", tasksController.getOne);
+
+  // Las dos que traen cuerpo pasan primero por el validador. Si el cuerpo no
+  // cuadra, el validador contesta 400 y el controlador ni se entera.
+  router.post("/", validate(taskSchema), tasksController.create);
+  router.put("/:id", validate(taskSchema), tasksController.update);
+
+  router.delete("/:id", tasksController.remove);
 
   return router;
 }
