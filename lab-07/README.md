@@ -23,8 +23,35 @@ src/
   routes/auth.js                rutas publicas
   routes/tasks.js               rutas protegidas
 tests/
-  api.test.js
+  api.test.js                   las 2 del profesor
+  auth.test.js                  registro y acceso
+  tasks.test.js                 permisos, validacion y paginacion
+  helpers/fakeDb.js             base de datos falsa en memoria
 ```
+
+## Las pruebas
+
+`npm test` ejecuta **31 pruebas** y **no necesita PostgreSQL**: el modelo recibe
+la base de datos como parametro, asi que en las pruebas se le pasa la falsa de
+`tests/helpers/fakeDb.js`.
+
+Cubren registro, acceso, `401`, `403`, `400` y paginacion, que es lo que pide
+el apartado 6.9 del enunciado.
+
+Para comprobar que no son decorativas se rompio el codigo a proposito:
+
+| Rotura | Pruebas en rojo |
+|---|---|
+| Quitar la comprobacion de propiedad | 2 |
+| Quitar el tope de `limit` | 1 |
+| Hacer el esquema de Zod permisivo | 1 |
+| Coger el dueno del cuerpo en vez del token | **0** |
+
+La ultima fila es la interesante: **no fallo ninguna**. El motivo es que Zod
+tira los campos que no estan declarados en el esquema, asi que `req.body.userId`
+ya era `undefined` antes de llegar al controlador. La proteccion no estaba donde
+parecia, y por eso se anadio una prueba que vigila el sitio correcto: que el
+esquema descarte los campos no declarados.
 
 ## Como se ejecuta
 
