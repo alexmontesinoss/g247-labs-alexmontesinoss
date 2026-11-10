@@ -1,0 +1,6 @@
+# Dependencias instaladas por npm: se reinstalan con "npm install",
+# no se suben al repositorio.
+node_modules/
+
+# Variables de entorno (claves, contrasenas). Nunca al repositorio.
+.env
