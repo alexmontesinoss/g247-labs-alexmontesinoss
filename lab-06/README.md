@@ -13,14 +13,15 @@ las consultas y se encapsulan en un modelo de Node.
 | `schema.sql` | Las tablas `users` y `tasks` y los datos de prueba |
 | `queries.sql` | Las cuatro consultas pedidas, cada una comentada |
 | `src/models/tasksModel.js` | El modelo: seis metodos, todos parametrizados |
-| `tests/tasksModel.test.js` | Las pruebas automaticas |
+| `tests/tasksModel.test.js` | Las 8 pruebas del profesor, copiadas sin tocar |
+| `tests/extra.test.js` | 6 pruebas mias sobre casos que las suyas no cubren |
 | `tests/helpers/fakeDb.js` | Base de datos falsa en memoria para las pruebas |
 
 ## Como se ejecuta
 
 ```bash
 npm install
-npm test
+npm test      # 14 pruebas
 ```
 
 Las pruebas **no necesitan PostgreSQL**: el modelo recibe la base de datos como
