@@ -7,9 +7,10 @@
   lee de una sentada.
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext.jsx";
+import { getUser } from "./api.js";
 
 // ---------------------------------------------------------------------
 // Home
@@ -117,7 +118,7 @@ export function UsersList() {
 }
 
 // ---------------------------------------------------------------------
-// UserDetail — primera parte: solo ensenar el id de la URL.
+// UserDetail — segunda parte: carga el usuario de verdad desde la API.
 // ---------------------------------------------------------------------
 export function UserDetail() {
   // useParams lee los trozos variables de la ruta. Como la ruta se declaro
@@ -125,7 +126,71 @@ export function UserDetail() {
   // Y llega como TEXTO, porque en una URL todo es texto.
   const { id } = useParams();
 
-  return <h1>User {id}</h1>;
+  // El mismo patron de tres estados del laboratorio 9.
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  /*
+    LA DEPENDENCIA ES [id], NO [].
+
+    El array de dependencias le dice a React cuando tiene que volver a
+    ejecutar el efecto: cuando alguno de esos valores haya cambiado desde
+    la vez anterior.
+
+    Con [] el efecto se ejecutaria UNA SOLA VEZ, al montar el componente.
+    Y aqui esta el problema: al ir de /users/3 a /users/7, React NO desmonta
+    UserDetail y monta otro, porque es el mismo componente en la misma ruta;
+    lo unico que cambia es el id. Asi que el efecto no se volveria a
+    ejecutar y seguirias viendo los datos del usuario 3 con la URL diciendo
+    7. La pantalla y la direccion se quedarian contando cosas distintas.
+
+    Con [id], en cuanto el id cambia React vuelve a lanzar el efecto y pide
+    el usuario correcto.
+  */
+  useEffect(() => {
+    // La funcion del efecto no es async: se declara dentro y se llama.
+    async function loadUser() {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const datos = await getUser(id);
+        setUser(datos);
+      } catch (fallo) {
+        setError("No se ha podido cargar el usuario.");
+        console.error(fallo);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadUser();
+  }, [id]);
+
+  // Solo una de las tres ramas se pinta.
+  if (loading) {
+    return <p>Cargando usuario...</p>;
+  }
+
+  if (error) {
+    return (
+      <section>
+        <p role="alert">{error}</p>
+        <Link to="/users">Volver a la lista</Link>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+      <p>{user.phone}</p>
+      <p>{user.company.name}</p>
+      <Link to="/users">Volver a la lista</Link>
+    </section>
+  );
 }
 
 // ---------------------------------------------------------------------

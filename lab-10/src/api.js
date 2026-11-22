@@ -38,4 +38,14 @@ export async function getPosts(limit = 10) {
   return response.data;
 }
 
+// Un usuario suelto, por su id. Es la que usa la ruta /users/:id.
+// Fijate en que el id va dentro de la direccion y no como parametro: aqui
+// no estoy filtrando una lista, estoy pidiendo UN recurso concreto. Es la
+// misma diferencia que habia en la practica 1 entre /partidos?deporte=tenis
+// y /partidos/5.
+export async function getUser(id) {
+  const response = await api.get(`/users/${id}`);
+  return response.data;
+}
+
 export default api;

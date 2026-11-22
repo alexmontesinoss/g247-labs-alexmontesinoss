@@ -64,9 +64,17 @@ export default function App() {
         {/*
           Los dos puntos de ":id" marcan un trozo variable: /users/3 y
           /users/7 encajan los dos, y UserDetail lee el numero con
-          useParams(). Esta ruta se protege en la segunda parte.
+          useParams(). Va protegida igual que /settings: el mismo Protected
+          sirve para las dos, porque envuelve a lo que le pongas dentro.
         */}
-        <Route path="/users/:id" element={<UserDetail />} />
+        <Route
+          path="/users/:id"
+          element={
+            <Protected>
+              <UserDetail />
+            </Protected>
+          }
+        />
 
         <Route
           path="/settings"
