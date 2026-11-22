@@ -15,6 +15,7 @@
 import { useState } from "react";
 import List from "./List.jsx";
 import UserList from "./UserList.jsx";
+import PostList from "./PostList.jsx";
 
 export default function App() {
   // El array vive AQUI, en App. Los otros dos componentes no lo conocen:
@@ -73,6 +74,14 @@ export default function App() {
       */}
       <h2>Usuarios (desde la API)</h2>
       <UserList />
+
+      {/*
+        Las dos listas son independientes: cada una se busca sus datos y
+        lleva sus propios estados de carga y error. Si una falla, la otra
+        se sigue viendo.
+      */}
+      <h2>Publicaciones (desde la API)</h2>
+      <PostList />
     </main>
   );
 }

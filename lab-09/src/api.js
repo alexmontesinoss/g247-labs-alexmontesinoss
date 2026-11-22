@@ -28,8 +28,13 @@ export async function getUsers() {
   return response.data;
 }
 
-export async function getPosts() {
-  const response = await api.get("/posts");
+// La API devuelve 100 publicaciones si no se le dice otra cosa. Le paso
+// _limit para que mande solo las que voy a enseñar: pedir 10 son 2,7 KB y
+// pedir las 100 son 26,9 KB, diez veces mas, para tirar 90 por el camino.
+// Es lo mismo que hacia el limit de la practica 1: se recorta donde estan
+// los datos, no despues de traerselos.
+export async function getPosts(limit = 10) {
+  const response = await api.get("/posts", { params: { _limit: limit } });
   return response.data;
 }
 
