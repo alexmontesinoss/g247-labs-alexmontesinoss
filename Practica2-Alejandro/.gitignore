@@ -1,0 +1,8 @@
+# Dependencias instaladas por npm: se reinstalan con "npm install".
+node_modules/
+
+# Variables de entorno reales (contrasena de la base de datos, secreto del
+# token). NUNCA al repositorio. La plantilla sin secretos es .env.example.
+.env
+.env.local
+*.local
