@@ -8,7 +8,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node --watch src/server.js",
-    "test": "node --test tests/",
+    "test": "node --test",
     "db:migrate": "node db/run.js migrate",
     "db:seed": "node db/run.js seed",
     "db:reset": "node db/run.js reset"
